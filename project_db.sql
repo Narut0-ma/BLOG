@@ -1,0 +1,35 @@
+CREATE DATABASE project_db;
+
+USE project_db;
+
+CREATE TABLE users (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(100) DEFAULT NULL,
+    last_name VARCHAR(100) DEFAULT NULL,
+    email VARCHAR(100) DEFAULT NULL,
+    password VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE posts (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) DEFAULT NULL,
+    content TEXT DEFAULT NULL,
+    user_id INT(11) DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE post_images (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    post_id INT(11) DEFAULT NULL,
+    image_path VARCHAR(255) DEFAULT NULL,
+    filename VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_post FOREIGN KEY (post_id) REFERENCES posts(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+

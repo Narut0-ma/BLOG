@@ -1,5 +1,6 @@
 import os
 import re
+from dotenv import load_dotenv
 from flask import Flask, request, redirect, url_for, render_template, session, flash
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -45,10 +46,10 @@ def get_connection():
     """Get database connection with error handling"""
     try:
         return mysql.connector.connect(
-            host=os.environ.get('DB_HOST', 'localhost'),
-            user=os.environ.get('DB_USER', 'root'),
-            password=os.environ.get('DB_PASSWORD', ''),
-            database=os.environ.get('DB_NAME', 'project_db'),
+            host=os.getenv("DB_HOST"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME")
         )
     except Error as e:
         print(f"Database connection error: {e}")

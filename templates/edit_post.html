@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Edit Post{% endblock %}
+{% block content %}
+<div class="col-md-8 mx-auto">
+  <h3 class="mb-3">Edit Post</h3>
+  <form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label>Title</label>
+      <input type="text" name="title" class="form-control" value="{{ post.title }}" required>
+    </div>
+    <div class="mb-3">
+      <label>Content</label>
+      <textarea name="content" class="form-control" rows="4" required>{{ post.content }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label>Current Images</label>
+      <div class="row">
+        {% for img in images %}
+          <div class="col-md-3 mb-2 text-center">
+            <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" class="img-fluid rounded mb-1">
+            <form method="POST" action="{{ url_for('delete_image', post_id=post.id, image_id=img.id) }}">
+              <button type="submit" class="btn btn-danger btn-sm w-100">Delete</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label>Add More Images</label>
+      <input type="file" name="images" class="form-control" multiple>
+    </div>
+    <button type="submit" class="btn btn-dark">Update</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

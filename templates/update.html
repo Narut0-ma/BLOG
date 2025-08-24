@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Update Post - BlogApp{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0"><i class="fas fa-edit"></i> Update Post</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">
+                            <i class="fas fa-heading"></i> Post Title
+                        </label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               value="{{ post.title }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">
+                            <i class="fas fa-paragraph"></i> Content
+                        </label>
+                        <textarea class="form-control" id="content" name="content" rows="8" required>{{ post.content }}</textarea>
+                    </div>
+                    
+                    {% if images %}
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-images"></i> Current Images
+                        </label>
+                        <div class="row">
+                            {% for image in images %}
+                            <div class="col-md-3 mb-2">
+                                <div class="position-relative">
+                                    <img src="{{ url_for('static', filename='uploads/' + image.filename) }}" 
+                                         class="img-thumbnail w-100" alt="Post image" style="height: 120px; object-fit: cover;">
+                                    <form method="POST" class="position-absolute top-0 end-0 m-1"
+                                          action="{{ url_for('delete_image', post_id=post.id, image_id=image.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Delete this image?')"
+                                                title="Delete image">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="images" class="form-label">
+                            <i class="fas fa-plus"></i> Add New Images (Optional)
+                        </label>
+                        <input type="file" class="form-control" id="images" name="images" multiple 
+                               accept="image/*">
+                        <div class="form-text">
+                            Add more images to your post. Only PNG, JPG, JPEG, GIF, and WebP files are allowed.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Update Post
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Add Post - BlogApp{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-plus"></i> Create New Post</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">
+                            <i class="fas fa-heading"></i> Post Title
+                        </label>
+                        <input type="text" class="form-control" id="title" name="title" required 
+                               placeholder="Enter an engaging title">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">
+                            <i class="fas fa-paragraph"></i> Content
+                        </label>
+                        <textarea class="form-control" id="content" name="content" rows="8" required 
+                                  placeholder="Share your thoughts..."></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="images" class="form-label">
+                            <i class="fas fa-images"></i> Images (Optional)
+                        </label>
+                        <input type="file" class="form-control" id="images" name="images" multiple 
+                               accept="image/*">
+                        <div class="form-text">
+                            You can select multiple images. Only PNG, JPG, JPEG, GIF, and WebP files are allowed. Maximum size: 16MB per file.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Publish Post
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
